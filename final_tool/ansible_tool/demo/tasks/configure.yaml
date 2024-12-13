@@ -1,0 +1,16 @@
+- name: Template Nginx configuration file
+  ansible.builtin.template:
+    src: "{{ nginx_config_template }}"
+    dest: "/etc/nginx/nginx.conf"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart nginx
+
+- name: Template dynamic HTML file
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+    owner: www-data
+    group: www-data
+    mode: '0644'

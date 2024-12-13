@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+    stages {
+        stage('updateSystem') {
+            steps {
+                sh '''
+                    sudo apt update
+                '''
+            }
+        }
+        stage('install_unzip') {
+            steps {
+                sh '''
+                    sudo apt install unzip -y
+                '''
+            }
+        }
+        stage('install_PythonAndLibrary') {
+            steps {
+                sh '''
+                    sudo apt install python3-pip -y
+                    sudo apt install python3-boto3 -y
+                    pip list | grep boto3
+                '''
+            }
+        }
+        stage('install_aws_cli') {
+            steps {
+                 script {
+                    def awsInstalled = sh(script: 'aws --version', returnStatus: true)
+                     if (awsInstalled != 0) {
+                            echo 'AWS CLI not found. Installing...'
+                      sh '''
+                            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+                            unzip awscliv2.zip
+                            sudo ./aws/install
+                        '''
+                            } else {
+                                echo 'AWS CLI is already installed.'
+                            }
+                        }
+                    }
+                }
+    }
+}
+
+
+
+
+
+
+

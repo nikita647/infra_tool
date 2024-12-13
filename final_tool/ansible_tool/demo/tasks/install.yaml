@@ -1,0 +1,26 @@
+---
+- name: install nginx on redhat
+  yum:
+    name: "nginx-{{ nginx_version }}"
+    state: present
+    update_cache: yes
+  notify: Restart nginx
+  when: ansible_os_family == "RedHat"
+
+- name: installation for debian
+  apt:
+    name: nginx={{ nginx_version }}
+    state: present
+    update_cache: yes
+  notify: Restart nginx
+  when: ansible_os_family == "Debian"
+
+# - name: "install nginx version {{ nginx_version}}"
+#   package:
+#     name: "nginx-{{ nginx_version }}"
+#     state: present
+#   notify: Restart nginx
+  
+
+
+  

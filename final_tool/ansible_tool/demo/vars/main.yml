@@ -1,0 +1,7 @@
+---
+# vars file for demo
+nginx_version: "1.24.0-2ubuntu7.1"
+nginx_user: "www-data"    # The user under which Nginx runs
+nginx_worker_processes: "auto"  # Automatically adjust worker processes based on CPU cores
+nginx_worker_connections: "1024" # Max connections per worker
+nginx_config_template: "nginx.conf.j2"
